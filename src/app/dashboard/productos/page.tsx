@@ -8,6 +8,7 @@ interface Producto {
   nombre: string;
   precio: number;
   stock: number;
+  imagenUrl: string;
 }
 
 export default function ProductosPage() {

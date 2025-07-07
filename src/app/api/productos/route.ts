@@ -18,28 +18,73 @@ export async function GET() {
     }
 
     const userId = verifyToken(token);
+     if (!userId) {
+       return NextResponse.json({ mensaje: 'Token inválido' }, { status: 401 });
+     }
+ 
+     const tienda = await prisma.tienda.findFirst({ where: { userId } });
+     if (!tienda) {
+       return NextResponse.json([], { status: 200 });
+     }
+ 
+     const productos = await prisma.producto.findMany({
+       where: { tiendaId: tienda.id },
+       select: {
+         id: true,
+         nombre: true,
+         precio: true,
+         stock: true,
+         imagenUrl: true,
+       },
+     });
+ 
+     return NextResponse.json(productos);
+   } catch (error) {
+     console.error('Error al obtener productos:', error);
+     return NextResponse.json({ mensaje: 'Error interno del servidor' }, { status: 500 });
+   }
+ }
+
+export async function POST(req: Request) {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('authToken')?.value;
+
+    if (!token) {
+      return NextResponse.json({ mensaje: 'No autorizado' }, { status: 401 });
+    }
+
+    const userId = verifyToken(token);
     if (!userId) {
       return NextResponse.json({ mensaje: 'Token inválido' }, { status: 401 });
     }
 
-    const tienda = await prisma.tienda.findFirst({ where: { userId } });
+   const tienda = await prisma.tienda.findFirst({ where: { userId } });
     if (!tienda) {
-      return NextResponse.json([], { status: 200 });
+      return NextResponse.json(
+        { mensaje: 'Tienda no encontrada' },
+        { status: 404 }
+      );
     }
 
-    const productos = await prisma.producto.findMany({
-      where: { tiendaId: tienda.id },
-      select: {
-        id: true,
-        nombre: true,
-        precio: true,
-        stock: true,
+    const { nombre, precio, stock, imagenUrl } = await req.json();
+
+    const producto = await prisma.producto.create({
+      data: {
+        nombre,
+        precio,
+        stock,
+        imagenUrl,
+        tiendaId: tienda.id,
       },
     });
 
-    return NextResponse.json(productos);
+    return NextResponse.json(producto, { status: 201 });
   } catch (error) {
-    console.error('Error al obtener productos:', error);
-    return NextResponse.json({ mensaje: 'Error interno del servidor' }, { status: 500 });
+    console.error('Error al crear producto:', error);
+    return NextResponse.json(
+      { mensaje: 'Error interno del servidor' },
+      { status: 500 }
+    );
   }
 }
