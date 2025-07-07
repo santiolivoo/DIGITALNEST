@@ -28,7 +28,30 @@ export default function RegistroPage() {
       body: JSON.stringify({
         nombre,
         email,
-@@ -54,51 +55,52 @@ export default function RegistroPage() {
+        password,
+        confirmPassword,
+        aceptoTerminos: acepto,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await res.json()
+    if (res.ok) {
+      // Registro exitoso, intentar login inmediatamente
+      const loginRes = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+      })
+
+      const loginData = await loginRes.json()
+
+      if (loginRes.ok) {
         // Limpiar formulario y redirigir solo si el login fue exitoso
         setMensaje(data.mensaje)
         setNombre('')
@@ -81,7 +104,18 @@ export default function RegistroPage() {
           value={password}
           required
           onChange={(e) => setPassword(e.target.value)}
-@@ -117,26 +119,27 @@ export default function RegistroPage() {
+          className="w-full p-3 mb-2 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
+        />
+        {!passwordValida && password.length > 0 && (
+          <p className="text-sm text-red-600 mb-2">La contraseña debe tener al menos 6 caracteres, una may\u00fascula y un n\u00famero.</p>
+        )}
+
+        <input
+          type="password"
+          placeholder="Confirmar contraseña"
+          value={confirmPassword}
+          required
+          onChange={(e) => setConfirmPassword(e.target.value)}
           className="w-full p-3 mb-2 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
         />
         {!confirmaOK && confirmPassword.length > 0 && (
