@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Header from './Header';
 
 export const metadata: Metadata = {
-  title: 'Dashboard | DIGITALNEST',
+  title: 'Dashboard | DigitalNest',
   description: 'Panel de control para tu tienda',
 };
 

@@ -1,8 +1,9 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,63 +11,56 @@ export default function LoginPage() {
   const [mensaje, setMensaje] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    async function checkAuth() {
-      console.log("🔍 Verificando sesión con /api/session");
-      try {
-        const res = await fetch("/api/session", {
-          method: "GET",
-          credentials: "include", // para incluir cookies
-        });
-
-        const data = await res.json();
-        console.log("📬 Resultado /api/session:", data);
-
-        if (data.authenticated) {
-          console.log("✅ Usuario autenticado. Redirigiendo a /dashboard...");
-          router.replace("/dashboard");
-        }
-      } catch (error) {
-        console.error("❌ Error al verificar sesión:", error);
-      }
-    }
-
-    checkAuth();
-  }, [router]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log("🚀 Enviando login...");
+useEffect(() => {
+  async function checkAuth() {
+    console.log("🔍 Verificando sesión con /api/session");
     try {
+      const res = await fetch("/api/session", {
+        method: "GET",
+        credentials: "include", // para incluir cookies
+      });
+
+      const data = await res.json();
+      console.log("📬 Resultado /api/session:", data);
+
+      if (data.authenticated) {
+        console.log("✅ Usuario autenticado. Redirigiendo a /dashboard...");
+        router.replace("/dashboard");
+      }
+    } catch (error) {
+      console.error("❌ Error al verificar sesión:", error);
+    }
+  }
+  checkAuth();
+}, [router]);
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+      setMensaje(""); // Limpiar mensaje previo
+
+      try {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
-      console.log("📥 Resultado login:", data);
-      console.log("📦 Headers:", res.headers);
-      console.log("🍪 Set-Cookie:", res.headers.get("set-cookie"));
 
-      if (res.ok) {
-        setMensaje("Inicio de sesión exitoso! Redirigiendo...");
-        console.log("✅ Login OK. Redirigiendo en 500ms...");
-        setTimeout(() => {
-          router.replace("/dashboard");
-        }, 500);
+      if (res.ok && data.success) {
+        setMensaje("Inicio de sesión exitoso. Redirigiendo...");
+        router.replace("/dashboard");
       } else {
-        setMensaje(data.mensaje || "Error en inicio de sesión");
+        setMensaje(data.message || "Error al iniciar sesión.");
       }
-    } catch (error) {
-      console.error("❌ Error en conexión al login:", error);
-      setMensaje("Error de conexión");
+      } catch (error) {
+      setMensaje("Error de red al intentar iniciar sesión.");
+      console.error(error);
+      }
     }
-  };
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
@@ -74,9 +68,8 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-lg w-full max-w-md text-white"
       >
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Inicia sesión en DIGITALNEST
-        </h1>
+        <Logo className="mx-auto mb-6 h-10 w-auto" />
+        <h1 className="text-3xl font-bold mb-6 text-center">Inicia sesión</h1>
 
         <input
           type="email"

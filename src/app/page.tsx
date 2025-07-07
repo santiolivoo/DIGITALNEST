@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -25,6 +26,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6">
       <section className="text-center max-w-3xl">
+        <Logo className="mx-auto mb-8 h-10 w-auto" />
         <h1 className="text-5xl font-bold mb-6">
           Bienvenido a <span className="text-[#FFD944]">DigitalNest</span>
         </h1>
@@ -50,16 +52,7 @@ export default function HomePage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
             <span>Listo para vender en minutos</span>
-          </li>
-        </ul>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-sm border border-white/20">
-            <h2 className="text-2xl font-semibold mb-3">¿Primera vez aquí?</h2>
-            <p className="text-gray-200 mb-6">
-              DigitalNest te permite crear y gestionar tu tienda sin necesidad de
-              conocimientos técnicos.
-            </p>
+@@ -63,26 +65,26 @@ export default function HomePage() {
             <Link
               href="/registro"
               className="inline-block px-6 py-3 rounded-xl font-medium bg-[#FFD944] text-gray-900 hover:bg-yellow-300 transition"

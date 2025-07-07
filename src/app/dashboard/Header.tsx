@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Logo from '@/components/Logo';
 
 export default function Header() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function Header() {
   return (
     <header className="bg-white/10 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/20">
       <div className="flex flex-col">
-        <h1 className="text-2xl font-bold text-[#FFD944]">DIGITALNEST</h1>
+        <Logo className="h-8 w-auto" />
         {nombreTienda && (
           <span className="text-sm text-gray-200">Tienda: {nombreTienda}</span>
         )}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Logo from '@/components/Logo'
 
 export default function RegistroPage() {
   const [nombre, setNombre] = useState('')
@@ -27,30 +28,7 @@ export default function RegistroPage() {
       body: JSON.stringify({
         nombre,
         email,
-        password,
-        confirmPassword,
-        aceptoTerminos: acepto,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    const data = await res.json()
-    if (res.ok) {
-      // Registro exitoso, intentar login inmediatamente
-      const loginRes = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-      })
-
-      const loginData = await loginRes.json()
-
-      if (loginRes.ok) {
+@@ -54,51 +55,52 @@ export default function RegistroPage() {
         // Limpiar formulario y redirigir solo si el login fue exitoso
         setMensaje(data.mensaje)
         setNombre('')
@@ -76,7 +54,8 @@ export default function RegistroPage() {
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
       <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-lg w-full max-w-md text-white">
-        <h1 className="text-3xl font-bold mb-6 text-center">Registrate en DIGITALNEST</h1>
+        <Logo className="mx-auto mb-6 h-10 w-auto" />
+        <h1 className="text-3xl font-bold mb-6 text-center">Regístrate</h1>
 
         <input
           type="text"
@@ -102,18 +81,7 @@ export default function RegistroPage() {
           value={password}
           required
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 mb-2 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
-        />
-        {!passwordValida && password.length > 0 && (
-          <p className="text-sm text-red-600 mb-2">La contraseña debe tener al menos 6 caracteres, una may\u00fascula y un n\u00famero.</p>
-        )}
-
-        <input
-          type="password"
-          placeholder="Confirmar contraseña"
-          value={confirmPassword}
-          required
-          onChange={(e) => setConfirmPassword(e.target.value)}
+@@ -117,26 +119,27 @@ export default function RegistroPage() {
           className="w-full p-3 mb-2 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
         />
         {!confirmaOK && confirmPassword.length > 0 && (
