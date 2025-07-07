@@ -12,16 +12,16 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Si el usuario ya está autenticado, redirigir al dashboard
+    // Chequea si ya está autenticado al cargar la página
     const isAuthenticated = Cookies.get('isAuthenticated');
     if (isAuthenticated) {
-      router.push('/dashboard');
+      router.replace('/dashboard');
     }
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const res = await fetch("/api/login", {
         method: "POST",
@@ -32,29 +32,30 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
-      
+
       if (res.ok) {
         setMensaje("Inicio de sesión exitoso! Redirigiendo...");
-        
+
         // Guardar cookie de autenticación
-        Cookies.set('isAuthenticated', 'true', { 
-          expires: 7, // 7 días
-          sameSite: 'strict',
-          secure: process.env.NODE_ENV === 'production',
+        Cookies.set('isAuthenticated', 'true', {
+          expires: 7,
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production', // true solo en producción
           path: '/'
         });
-        
-        // Redirigir al dashboard
-        router.push('/dashboard');
+
+        // Esperar un poco para asegurar que la cookie se guarde antes de redirigir
+        setTimeout(() => {
+          router.replace('/dashboard');
+        }, 200);
       } else {
         setMensaje(data.mensaje || "Error en inicio de sesión");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error en conexión al login:", error);
       setMensaje("Error de conexión");
     }
   };
-
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50">
