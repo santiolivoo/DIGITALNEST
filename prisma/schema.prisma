@@ -47,6 +47,8 @@ model Pedido {
   tienda    Tienda       @relation(fields: [tiendaId], references: [id])
   tiendaId  String
   items     ItemPedido[]
+  nombre    String?      // nombre del cliente
+  email     String?      // email del cliente
   createdAt DateTime     @default(now())
 }
 

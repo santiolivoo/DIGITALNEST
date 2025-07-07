@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Pedido" ADD COLUMN "nombre" TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE "Pedido" ADD COLUMN "email" TEXT NOT NULL DEFAULT '';
