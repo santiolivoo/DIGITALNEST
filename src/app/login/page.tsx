@@ -50,11 +50,11 @@ useEffect(() => {
 
       const data = await res.json();
 
-      if (res.ok && data.success) {
+            if (res.ok) {
         setMensaje("Inicio de sesión exitoso. Redirigiendo...");
         router.replace("/dashboard");
       } else {
-        setMensaje(data.message || "Error al iniciar sesión.");
+        setMensaje(data.mensaje || "Error al iniciar sesión.");
       }
       } catch (error) {
       setMensaje("Error de red al intentar iniciar sesión.");
