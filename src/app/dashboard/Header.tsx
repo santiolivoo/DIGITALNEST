@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Logo from '@/components/Logo';
+// Update the path below to the correct relative path if needed
+import Logo from '../../components/Logo';
 
 export default function Header() {
   const router = useRouter();

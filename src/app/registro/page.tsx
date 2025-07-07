@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import Logo from '@/components/Logo'
 
@@ -14,7 +14,7 @@ export default function RegistroPage() {
   const [errores, setErrores] = useState<string | null>(null)
   const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setErrores(null)
 

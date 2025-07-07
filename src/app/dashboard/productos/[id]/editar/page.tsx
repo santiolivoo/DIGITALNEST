@@ -1,6 +1,9 @@
++2
+-2
+
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -35,7 +38,7 @@ export default function EditarProductoPage({ params }: { params: { id: string } 
     obtenerProducto();
   }, [id]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
