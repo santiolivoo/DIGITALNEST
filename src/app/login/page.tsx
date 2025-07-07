@@ -68,7 +68,7 @@ useEffect(() => {
         onSubmit={handleSubmit}
         className="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-lg w-full max-w-md text-white"
       >
-        <Logo className="mx-auto mb-6 h-10 w-auto" />
+        <Logo className="mx-auto mb-6 h-20 w-auto" />
         <h1 className="text-3xl font-bold mb-6 text-center">Inicia sesión</h1>
 
         <input

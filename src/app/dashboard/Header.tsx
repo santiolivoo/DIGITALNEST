@@ -46,7 +46,7 @@ export default function Header() {
   return (
     <header className="bg-white/10 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/20">
       <div className="flex flex-col">
-        <Logo className="h-8 w-auto" />
+        <Logo className="h-12 w-auto" />
         {nombreTienda && (
           <span className="text-sm text-gray-200">Tienda: {nombreTienda}</span>
         )}

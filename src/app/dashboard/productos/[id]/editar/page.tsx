@@ -1,12 +1,7 @@
-+2
--2
-
 'use client';
-
 import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
 export default function EditarProductoPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [nombre, setNombre] = useState('');

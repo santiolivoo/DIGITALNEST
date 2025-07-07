@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6">
       <section className="text-center max-w-3xl">
-        <Logo className="mx-auto mb-8 h-10 w-auto" />
+        <Logo className="mx-auto mb-8 h-20 w-auto" />
         <h1 className="text-5xl font-bold mb-6">
           Bienvenido a <span className="text-[#FFD944]">DigitalNest</span>
         </h1>
