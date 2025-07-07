@@ -50,6 +50,7 @@ export default function LoginPage() {
         setMensaje(data.mensaje || "Error en inicio de sesión");
       }
     } catch (error) {
+      console.error(error);
       setMensaje("Error de conexión");
     }
   };
