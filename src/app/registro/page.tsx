@@ -69,7 +69,7 @@ export default function RegistroPage() {
 
         <input
           type="text"
-          placeholder="Nombre completo o usuario"
+          placeholder="Nombre completo"
           value={nombre}
           required
           onChange={(e) => setNombre(e.target.value)}
@@ -111,7 +111,7 @@ export default function RegistroPage() {
 
         <label className="flex items-center mb-4">
           <input type="checkbox" checked={acepto} onChange={(e) => setAcepto(e.target.checked)} className="mr-2" />
-          <span className="text-black">Acepto los T\u00e9rminos y Condiciones</span>
+          <span className="text-black">Acepto los Términos y Condiciones</span>
         </label>
 
         <input
