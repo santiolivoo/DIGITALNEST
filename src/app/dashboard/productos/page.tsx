@@ -59,6 +59,7 @@ export default function ProductosPage() {
               <th className="px-4 py-2">Nombre</th>
               <th className="px-4 py-2">Precio</th>
               <th className="px-4 py-2">Stock</th>
+              <th className="px-4 py-2">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -74,6 +75,14 @@ export default function ProductosPage() {
                 <td className="px-4 py-2">{producto.nombre}</td>
                 <td className="px-4 py-2">${producto.precio.toFixed(2)}</td>
                 <td className="px-4 py-2">{producto.stock}</td>
+                <td className="px-4 py-2">
+                  <Link
+                    href={`/dashboard/productos/${producto.id}/editar`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Editar
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
