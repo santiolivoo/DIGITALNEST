@@ -69,12 +69,12 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50">
+    <main className="flex min-h-screen items-center justify-center p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-md w-full max-w-md"
+        className="bg-white/10 backdrop-blur-md p-8 rounded-xl shadow-lg w-full max-w-md text-white"
       >
-        <h1 className="text-3xl font-bold mb-6 text-center text-black">
+        <h1 className="text-3xl font-bold mb-6 text-center">
           Inicia sesión en DIGITALNEST
         </h1>
 
@@ -84,7 +84,7 @@ export default function LoginPage() {
           value={email}
           required
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 mb-4 border border-gray-300 rounded-md text-black placeholder:text-black"
+          className="w-full p-3 mb-4 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
         />
 
         <input
@@ -93,12 +93,12 @@ export default function LoginPage() {
           value={password}
           required
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 mb-4 border border-gray-300 rounded-md text-black placeholder:text-black"
+          className="w-full p-3 mb-4 border border-white/30 rounded-md bg-transparent text-white placeholder:text-gray-300"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition font-medium"
+          className="w-full bg-[#FFD944] text-gray-900 py-3 rounded-md hover:bg-yellow-300 transition font-medium"
         >
           Iniciar sesión
         </button>
@@ -114,8 +114,8 @@ export default function LoginPage() {
         )}
 
         <div className="text-center mt-4">
-          <span className="text-gray-600">¿No tienes cuenta? </span>
-          <Link href="/registro" className="text-blue-600 hover:underline">
+          <span className="text-gray-200">¿No tienes cuenta? </span>
+          <Link href="/registro" className="text-[#FFD944] hover:underline">
             Regístrate
           </Link>
         </div>

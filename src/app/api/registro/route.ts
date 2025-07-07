@@ -8,7 +8,47 @@ const prisma = globalForPrisma.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
+  const {
+    nombre,
+    email,
+    password,
+    confirmPassword,
+    experiencia,
+    tiposProducto,
+    referencia,
+    negocioNombre,
+    aceptoTerminos,
+  } = await req.json();
+
+  if (!nombre || !email || !password || !confirmPassword || !aceptoTerminos) {
+    return new Response(
+      JSON.stringify({ mensaje: 'Faltan campos requeridos' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  if (password !== confirmPassword) {
+    return new Response(
+      JSON.stringify({ mensaje: 'Las contrase\u00f1as no coinciden' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  if (!/^(?=.*[A-Z])(?=.*\d).{6,}$/.test(password)) {
+    return new Response(
+      JSON.stringify({ mensaje: 'La contrase\u00f1a es muy d\u00e9bil' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
 
   try {
     // Verificar si el usuario ya existe
@@ -25,14 +65,28 @@ export async function POST(req: Request) {
 
     // Cifrar contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
-    
-    // Crear usuario
-    await prisma.user.create({
+
+    // Crear usuario con campos opcionales
+    const user = await prisma.user.create({
       data: {
+        nombre,
         email,
         password: hashedPassword,
+        experiencia,
+        tiposProducto,
+        referencia,
       },
     });
+
+    // Crear tienda si se especifica nombre de negocio
+    if (negocioNombre) {
+      await prisma.tienda.create({
+        data: {
+          nombre: negocioNombre,
+          userId: user.id,
+        },
+      });
+    }
 
     return new Response(JSON.stringify({ mensaje: 'Usuario creado exitosamente' }), {
       status: 201,

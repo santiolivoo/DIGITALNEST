@@ -9,8 +9,12 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
+  nombre    String?
   email     String   @unique
   password  String
+  experiencia   String?
+  tiposProducto String?
+  referencia    String?
   tiendas   Tienda[]
   createdAt DateTime @default(now())
 }

@@ -42,21 +42,21 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white shadow p-4 flex justify-between items-center">
+    <header className="bg-white/10 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/20">
       <div className="flex flex-col">
-        <h1 className="text-2xl font-bold text-blue-700">DIGITALNEST</h1>
+        <h1 className="text-2xl font-bold text-[#FFD944]">DIGITALNEST</h1>
         {nombreTienda && (
-          <span className="text-sm text-gray-600">Tienda: {nombreTienda}</span>
+          <span className="text-sm text-gray-200">Tienda: {nombreTienda}</span>
         )}
       </div>
       <nav className="space-x-4 flex items-center">
-        <Link href="/dashboard" className="text-blue-600 hover:underline">Inicio</Link>
-        <Link href="/dashboard/productos" className="text-blue-600 hover:underline">Productos</Link>
-        <Link href="/dashboard/pedidos" className="text-blue-600 hover:underline">Pedidos</Link>
-        <Link href="/dashboard/configuracion" className="text-blue-600 hover:underline">Configuración</Link>
+        <Link href="/dashboard" className="hover:underline">Inicio</Link>
+        <Link href="/dashboard/productos" className="hover:underline">Productos</Link>
+        <Link href="/dashboard/pedidos" className="hover:underline">Pedidos</Link>
+        <Link href="/dashboard/configuracion" className="hover:underline">Configuración</Link>
         <button
           onClick={handleLogout}
-          className="ml-4 bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
+          className="ml-4 bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"
         >
           Cerrar sesión
         </button>
