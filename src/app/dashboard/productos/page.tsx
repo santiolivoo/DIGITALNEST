@@ -55,6 +55,7 @@ export default function ProductosPage() {
         <table className="w-full border border-blue-100 rounded overflow-hidden">
           <thead className="bg-blue-100 text-left">
             <tr>
+              <th className="px-4 py-2">Imagen</th>
               <th className="px-4 py-2">Nombre</th>
               <th className="px-4 py-2">Precio</th>
               <th className="px-4 py-2">Stock</th>
@@ -63,6 +64,13 @@ export default function ProductosPage() {
           <tbody>
             {productos.map((producto) => (
               <tr key={producto.id} className="border-t">
+                <td className="px-4 py-2">
+                  <img
+                    src={producto.imagenUrl}
+                    alt={producto.nombre}
+                    className="h-12 w-12 object-cover rounded"
+                  />
+                </td>
                 <td className="px-4 py-2">{producto.nombre}</td>
                 <td className="px-4 py-2">${producto.precio.toFixed(2)}</td>
                 <td className="px-4 py-2">{producto.stock}</td>
