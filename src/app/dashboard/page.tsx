@@ -17,12 +17,15 @@ export default function DashboardPage() {
   useEffect(() => {
     const obtenerTienda = async () => {
       try {
-        const res = await fetch('/api/tienda');
+        const res = await fetch('/api/tienda', {
+          credentials: 'include',
+        });
+
         const data = await res.json();
-        
-        if (res.ok && data) {
+        if (res.ok && data && data.id && data.nombre) {
           setTienda(data);
         }
+
         setLoading(false);
       } catch (error) {
         console.error('Error obteniendo tienda:', error);
@@ -33,53 +36,61 @@ export default function DashboardPage() {
     obtenerTienda();
   }, []);
 
-  const handleLogout = async () => {
-    // ... (código de logout existente)
-  };
-
   if (loading) {
-    return <div>Cargando...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-600">
+        Cargando...
+      </div>
+    );
   }
 
   return (
-    <main className="min-h-screen p-8">
+    <main className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Panel de Control</h1>
-          <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-            Cerrar sesión
-          </button>
-        </div>
+        <header className="flex justify-between items-center mb-10">
+          <h1 className="text-4xl font-semibold text-blue-700">DASHBOARD</h1>
+        </header>
 
-        {tienda ? (
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold">Tu tienda: {tienda.nombre}</h2>
-          </div>
-        ) : (
-          <div className="mb-6">
-            <p>Aún no has configurado tu tienda.</p>
-            <Link href="/dashboard/tienda" className="text-blue-600">
-              Configurar ahora
-            </Link>
-          </div>
-        )}
+        <section className="mb-8 bg-white rounded-xl p-6 shadow">
+          {tienda ? (
+            <h2 className="text-2xl font-medium text-gray-800">
+              Tu tienda: <span className="font-semibold text-blue-700">{tienda.nombre}</span>
+            </h2>
+          ) : (
+            <div>
+              <p className="text-gray-600 mb-2">Aún no has configurado tu tienda.</p>
+              <Link href="/dashboard/tienda" className="text-blue-600 hover:underline">
+                Configurar ahora
+              </Link>
+            </div>
+          )}
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link href="/dashboard/productos" className="border p-4 rounded-lg hover:bg-gray-50 transition">
-            <h3 className="font-medium">Productos</h3>
-            <p className="text-gray-600">Administra tu catálogo</p>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link
+            href="/dashboard/productos"
+            className="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-blue-100"
+          >
+            <h3 className="text-xl font-semibold text-blue-700 mb-1">Productos</h3>
+            <p className="text-gray-600 text-sm">Administra tu catálogo</p>
           </Link>
-          
-          <Link href="/dashboard/pedidos" className="border p-4 rounded-lg hover:bg-gray-50 transition">
-            <h3 className="font-medium">Pedidos</h3>
-            <p className="text-gray-600">Gestiona tus ventas</p>
+
+          <Link
+            href="/dashboard/pedidos"
+            className="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-blue-100"
+          >
+            <h3 className="text-xl font-semibold text-blue-700 mb-1">Pedidos</h3>
+            <p className="text-gray-600 text-sm">Gestiona tus ventas</p>
           </Link>
-          
-          <Link href="/dashboard/configuracion" className="border p-4 rounded-lg hover:bg-gray-50 transition">
-            <h3 className="font-medium">Configuración</h3>
-            <p className="text-gray-600">Personaliza tu tienda</p>
+
+          <Link
+            href="/dashboard/configuracion"
+            className="bg-white rounded-xl p-5 shadow hover:shadow-md transition border border-blue-100"
+          >
+            <h3 className="text-xl font-semibold text-blue-700 mb-1">Configuración</h3>
+            <p className="text-gray-600 text-sm">Personaliza tu tienda</p>
           </Link>
-        </div>
+        </section>
       </div>
     </main>
   );
