@@ -38,15 +38,33 @@ export default function RegistroPage() {
 
     const data = await res.json()
     if (res.ok) {
-      setMensaje(data.mensaje)
-      setNombre('')
-      setEmail('')
-      setPassword('')
-      setConfirmPassword('')
-      setAcepto(false)
-      setTimeout(() => {
-        router.replace('/dashboard')
-      }, 500)
+      // Registro exitoso, intentar login inmediatamente
+      const loginRes = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+      })
+
+      const loginData = await loginRes.json()
+
+      if (loginRes.ok) {
+        // Limpiar formulario y redirigir solo si el login fue exitoso
+        setMensaje(data.mensaje)
+        setNombre('')
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+        setAcepto(false)
+        setTimeout(() => {
+          router.replace('/dashboard')
+        }, 500)
+      } else {
+        // Mostrar error de login
+        setErrores(loginData.mensaje || 'Error en inicio de sesión')
+      }
     } else {
       setErrores(data.mensaje || 'Error en registro')
     }
