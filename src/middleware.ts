@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 // ❌ No redirige ni verifica sesión. Útil para desarrollo.
 export function middleware() {
