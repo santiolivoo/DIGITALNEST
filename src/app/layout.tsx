@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/digitalnest.svg",
   },
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
