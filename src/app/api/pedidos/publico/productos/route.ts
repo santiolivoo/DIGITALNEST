@@ -50,6 +50,8 @@ export async function POST(req: Request) {
       data: {
         total,
         tiendaId,
+        nombre: cliente.nombre,
+        email: cliente.email,
         items: { create: itemsData },
       },
       include: { items: true },

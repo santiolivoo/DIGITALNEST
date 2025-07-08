@@ -46,7 +46,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ mensaje: 'Token inválido' }, { status: 401 });
     }
 
-    const items: Array<{ productoId: string; cantidad: number }> = await req.json();
+       const { cliente, items } = await req.json();
+
+    if (!cliente?.nombre || !cliente?.email) {
+      return NextResponse.json({ mensaje: 'Datos de cliente incompletos' }, { status: 400 });
+    }
 
     if (!Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ mensaje: 'Sin items' }, { status: 400 });
@@ -81,6 +85,8 @@ export async function POST(req: Request) {
       data: {
         total,
         tiendaId,
+         nombre: cliente.nombre,
+        email: cliente.email,
         items: { create: itemsData },
       },
       include: { items: true },

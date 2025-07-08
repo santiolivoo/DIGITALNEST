@@ -1,7 +1,7 @@
 export interface PedidoData {
   id: string;
-  cliente: string;
+  nombre: string | null;
+  email: string | null;
   total: number;
-  estado: string;
-  fecha: string;
+  createdAt: string;
 }

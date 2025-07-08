@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 
 interface Pedido {
   id: string;
-  cliente: string;
+  nombre: string | null;
+  email: string | null;
   total: number;
-  estado: string;
-  fecha: string;
+  createdAt: string;
 }
 
 export default function PedidosPage() {
@@ -45,8 +45,8 @@ export default function PedidosPage() {
             <tr>
               <th className="px-4 py-2">ID</th>
               <th className="px-4 py-2">Cliente</th>
+              <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Total</th>
-              <th className="px-4 py-2">Estado</th>
               <th className="px-4 py-2">Fecha</th>
             </tr>
           </thead>
@@ -54,10 +54,10 @@ export default function PedidosPage() {
             {pedidos.map((p) => (
               <tr key={p.id} className="border-t border-white/20">
                 <td className="px-4 py-2">{p.id}</td>
-                <td className="px-4 py-2">{p.cliente}</td>
+                <td className="px-4 py-2">{p.nombre ?? '-'}</td>
+                <td className="px-4 py-2">{p.email ?? '-'}</td>
                 <td className="px-4 py-2">${p.total.toFixed(2)}</td>
-                <td className="px-4 py-2">{p.estado}</td>
-                <td className="px-4 py-2">{new Date(p.fecha).toLocaleDateString()}</td>
+                <td className="px-4 py-2">{new Date(p.createdAt).toLocaleDateString()}</td>
               </tr>
             ))}
           </tbody>
