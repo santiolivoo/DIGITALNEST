@@ -67,7 +67,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
     setMensaje('');
 
     try {
-      const res = await fetch('/api/pedidos/publico', {
+      const res = await fetch('/api/pedidos/publico/productos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
