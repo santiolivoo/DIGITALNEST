@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface Producto {
   id: string;
@@ -66,9 +67,11 @@ export default function ProductosPage() {
             {productos.map((producto) => (
               <tr key={producto.id} className="border-t border-white/20">
                 <td className="px-4 py-2">
-                  <img
+                  <Image
                     src={producto.imagenUrl}
                     alt={producto.nombre}
+                    width={48}
+                    height={48}
                     className="h-12 w-12 object-cover rounded"
                   />
                 </td>

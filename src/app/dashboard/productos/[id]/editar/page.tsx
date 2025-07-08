@@ -2,6 +2,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 export default function EditarProductoPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const [nombre, setNombre] = useState('');
@@ -112,9 +113,11 @@ export default function EditarProductoPage({ params }: { params: { id: string } 
           />
         </div>
         {imagenUrl && (
-          <img
+          <Image
             src={imagenUrl}
             alt="Vista previa"
+            width={160}
+            height={160}
             className="mt-2 max-h-40 rounded-md border border-white/20"
           />
         )}

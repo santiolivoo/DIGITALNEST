@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type FormEvent } from 'react';
+import Image from 'next/image';
 
 interface Producto {
   id: string;
@@ -105,9 +106,11 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
             className="bg-white/10 backdrop-blur-md rounded-xl p-4 shadow flex flex-col items-center"
           >
             {producto.imagenUrl && (
-              <img
+              <Image
                 src={producto.imagenUrl}
                 alt={producto.nombre}
+                width={128}
+                height={128}
                 className="mb-2 h-32 w-32 object-cover rounded"
               />
             )}

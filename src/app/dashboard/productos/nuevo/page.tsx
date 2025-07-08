@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NuevoProductoPage() {
   const [nombre, setNombre] = useState('');
@@ -91,9 +92,11 @@ export default function NuevoProductoPage() {
    />
  </div>
  {imagenUrl && (
-   <img
+   <Image
      src={imagenUrl}
      alt="Vista previa"
+     width={160}
+     height={160}
      className="mt-2 max-h-40 rounded-md border border-white/20"
    />
  )}
