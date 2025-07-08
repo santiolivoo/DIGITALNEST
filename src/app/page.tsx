@@ -55,7 +55,7 @@ export default function HomePage() {
           </li>
         </ul>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-sm border border-white/20">
             <h2 className="text-2xl font-semibold mb-3">¿Primera vez aquí?</h2>
             <p className="text-gray-200 mb-6">
@@ -81,6 +81,19 @@ export default function HomePage() {
               className="inline-block px-6 py-3 rounded-xl font-medium bg-white text-gray-900 hover:bg-gray-200 transition"
             >
               Iniciar sesión
+            </Link>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-sm border border-white/20">
+            <h2 className="text-2xl font-semibold mb-3">¿Querés comprar?</h2>
+            <p className="text-gray-200 mb-6">
+              Explorá los negocios creados en nuestra plataforma y realizá tu compra.
+            </p>
+            <Link
+              href="/tiendas"
+              className="inline-block px-6 py-3 rounded-xl font-medium bg-[#FFD944] text-gray-900 hover:bg-yellow-300 transition"
+            >
+              Comprar en Tiendas DigitalNest
             </Link>
           </div>
         </div>
