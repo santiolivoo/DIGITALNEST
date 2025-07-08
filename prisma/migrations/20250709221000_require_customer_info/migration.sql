@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Pedido" ALTER COLUMN "nombre" DROP DEFAULT;
+ALTER TABLE "Pedido" ALTER COLUMN "email" DROP DEFAULT;
