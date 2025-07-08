@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface Tienda {
@@ -10,7 +9,6 @@ interface Tienda {
 }
 
 export default function DashboardPage() {
-  const router = useRouter();
   const [tienda, setTienda] = useState<Tienda | null>(null);
   const [loading, setLoading] = useState(true);
 

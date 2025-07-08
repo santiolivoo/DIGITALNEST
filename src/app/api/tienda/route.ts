@@ -22,6 +22,7 @@ export async function GET() {
     return NextResponse.json(tienda || null);
 
   } catch (error) {
+    console.error('Error obteniendo tienda:', error);
     return NextResponse.json(
       { error: 'Error obteniendo tienda' },
       { status: 500 }
@@ -67,6 +68,7 @@ export async function POST(req: Request) {
       return NextResponse.json(tienda, { status: 201 });
     }
   } catch (error) {
+        console.error('Error creando/actualizando tienda:', error);
     return NextResponse.json(
       { error: 'Error creando/actualizando tienda' },
       { status: 500 }

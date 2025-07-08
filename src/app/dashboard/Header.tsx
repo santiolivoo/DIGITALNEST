@@ -36,7 +36,7 @@ export default function Header() {
           setNombreTienda(data.nombre);
         }
       } catch (error) {
-        console.error('No se pudo cargar el nombre de la tienda');
+      console.error('No se pudo cargar el nombre de la tienda:', error);
       }
     };
 

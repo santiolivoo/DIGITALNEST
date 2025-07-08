@@ -57,6 +57,7 @@ export default function TiendaPage() {
         setMensaje(data.error || 'Error guardando tienda');
       }
     } catch (error) {
+      console.error('Error guardando tienda:', error);
       setMensaje('Error de conexión');
     }
   };
