@@ -59,9 +59,9 @@ export default function RegistroPage() {
         setPassword('')
         setConfirmPassword('')
         setAcepto(false)
+                // Siempre redirigimos al onboarding después de registrar
         setTimeout(() => {
-          const done = localStorage.getItem('onboardingCompleted') === 'true'
-          router.replace(done ? '/dashboard' : '/onboarding')
+          router.replace('/onboarding')
         }, 500)
       } else {
         // Mostrar error de login

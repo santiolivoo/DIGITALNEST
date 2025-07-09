@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useOnboardingStore } from '../onboarding/useOnboardingStore';
 // Update the path below to the correct relative path if needed
 import Logo from '../../components/Logo';
 
@@ -18,6 +19,8 @@ export default function Header() {
       });
 
       if (res.ok) {
+        localStorage.removeItem('onboardingCompleted');
+        useOnboardingStore.getState().reset();
         router.replace('/');
       }
     } catch (error) {
