@@ -1,16 +1,11 @@
 import Image from 'next/image';
+import type { Producto } from '@/types/producto';
 
 interface Tienda {
   id: string;
   nombre: string;
 }
 
-interface Producto {
-  id: string;
-  nombre: string;
-  precio: number;
-  imagenUrl: string;
-}
 
 interface Props {
   tienda: Tienda;

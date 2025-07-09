@@ -4,14 +4,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import PlantillaCards from './PlantillaCards';
 import PlantillaMinimal from './PlantillaMinimal';
 import PlantillaDarkCarousel from './PlantillaDarkCarousel';
-
-interface Producto {
-  id: string;
-  nombre: string;
-  precio: number;
-  stock: number;
-  imagenUrl: string;
-}
+import type { Producto } from '@/types/producto';
 
 interface CartItem {
   producto: Producto;

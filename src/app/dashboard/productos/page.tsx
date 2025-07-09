@@ -3,14 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-
-interface Producto {
-  id: string;
-  nombre: string;
-  precio: number;
-  stock: number;
-  imagenUrl: string;
-}
+import type { Producto } from '@/types/producto';
 
 export default function ProductosPage() {
   const [productos, setProductos] = useState<Producto[]>([]);
