@@ -1,12 +1,18 @@
 'use client'
 import { useOnboardingStore } from '../useOnboardingStore'
+import { useRouter } from 'next/navigation'
 
 export default function Step1({ onNext }: { onNext: () => void }) {
   const setData = useOnboardingStore((s) => s.setData)
+  const router = useRouter()
 
   const handleSelect = (value: boolean) => {
     setData({ quiereVender: value })
-    onNext()
+    if (value) {
+      onNext()
+    } else {
+      router.replace('/inspiracion')
+    }
   }
 
   return (
