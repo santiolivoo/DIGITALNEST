@@ -80,3 +80,42 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function PATCH(req: Request) {
+  try {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'No autorizado' },
+        { status: 401 }
+      );
+    }
+
+    const { plantilla } = await req.json();
+
+    const tienda = await prisma.tienda.findFirst({
+      where: { userId: user.id }
+    });
+
+    if (!tienda) {
+      return NextResponse.json(
+        { error: 'Tienda no encontrada' },
+        { status: 404 }
+      );
+    }
+
+    const updated = await prisma.tienda.update({
+      where: { id: tienda.id },
+      data: { plantilla }
+    });
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    console.error('Error actualizando plantilla:', error);
+    return NextResponse.json(
+      { error: 'Error actualizando plantilla' },
+      { status: 500 }
+    );
+  }
+}
