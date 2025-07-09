@@ -10,6 +10,7 @@ import Logo from '../../components/Logo';
 export default function Header() {
   const router = useRouter();
   const [nombreTienda, setNombreTienda] = useState<string>('');
+  const [tiendaId, setTiendaId] = useState<string | null>(null);
 
   const handleLogout = async () => {
     try {
@@ -35,8 +36,13 @@ export default function Header() {
           credentials: 'include',
         });
         const data = await res.json();
-        if (res.ok && data?.nombre) {
-          setNombreTienda(data.nombre);
+        if (res.ok && data) {
+          if (data.nombre) {
+            setNombreTienda(data.nombre);
+          }
+          if (data.id) {
+            setTiendaId(data.id);
+          }
         }
       } catch (error) {
       console.error('No se pudo cargar el nombre de la tienda:', error);
@@ -59,6 +65,11 @@ export default function Header() {
         <Link href="/dashboard/productos" className="hover:underline">Productos</Link>
         <Link href="/dashboard/pedidos" className="hover:underline">Pedidos</Link>
         <Link href="/dashboard/configuracion" className="hover:underline">Configuración</Link>
+        {tiendaId && (
+          <Link href={`/tienda/${tiendaId}`} className="hover:underline">
+            Ver mi tienda
+          </Link>
+        )}
         <button
           onClick={handleLogout}
           className="ml-4 bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"

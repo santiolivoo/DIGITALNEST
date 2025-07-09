@@ -51,9 +51,17 @@ export default function DashboardPage() {
 
         <section className="mb-8 bg-white/10 backdrop-blur-md rounded-xl p-6 shadow">
           {tienda ? (
-            <h2 className="text-2xl font-medium text-gray-200">
-              Tu tienda: <span className="font-semibold text-[#FFD944]">{tienda.nombre}</span>
-            </h2>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-medium text-gray-200">
+                Tu tienda: <span className="font-semibold text-[#FFD944]">{tienda.nombre}</span>
+              </h2>
+              <Link
+                href={`/tienda/${tienda.id}`}
+                className="text-[#FFD944] hover:underline block"
+              >
+                Ver mi tienda
+              </Link>
+            </div>
           ) : (
             <div>
               <p className="text-gray-300 mb-2">Aún no has configurado tu tienda.</p>

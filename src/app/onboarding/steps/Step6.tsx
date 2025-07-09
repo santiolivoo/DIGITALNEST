@@ -1,5 +1,4 @@
 'use client'
-import { useEffect } from 'react'
 import { useOnboardingStore } from '../useOnboardingStore'
 import { useRouter } from 'next/navigation'
 
@@ -14,7 +13,6 @@ export default function Step6({ onBack }: { onBack: () => void }) {
     router.replace('/dashboard')
   }
 
-  useEffect(() => {}, [])
 
   return (
     <div className="space-y-6 text-center">
