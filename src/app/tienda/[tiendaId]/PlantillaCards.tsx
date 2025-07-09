@@ -15,9 +15,10 @@ interface Producto {
 interface Props {
   tienda: Tienda;
   productos: Producto[];
+  onAdd?: (producto: Producto) => void;
 }
 
-export default function PlantillaCards({ tienda, productos }: Props) {
+export default function PlantillaCards({ tienda, productos, onAdd }: Props) {
   return (
     <div className="p-6 text-white">
       <h2 className="text-3xl font-semibold text-center text-[#FFD944] mb-8">
@@ -40,6 +41,14 @@ export default function PlantillaCards({ tienda, productos }: Props) {
             )}
             <h3 className="text-xl font-semibold mb-1">{producto.nombre}</h3>
             <p className="mb-2">${producto.precio.toFixed(2)}</p>
+                        {onAdd && (
+              <button
+                onClick={() => onAdd(producto)}
+                className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded mt-2 hover:bg-yellow-300 transition"
+              >
+                Agregar al carrito
+              </button>
+            )}
           </div>
         ))}
       </div>

@@ -17,9 +17,10 @@ interface Producto {
 interface Props {
   tienda: Tienda;
   productos: Producto[];
+  onAdd?: (producto: Producto) => void;
 }
 
-export default function PlantillaDarkCarousel({ tienda, productos }: Props) {
+export default function PlantillaDarkCarousel({ tienda, productos, onAdd }: Props) {
   const [index, setIndex] = useState(0);
 
   if (productos.length === 0) {
@@ -55,6 +56,14 @@ export default function PlantillaDarkCarousel({ tienda, productos }: Props) {
           )}
           <h3 className="text-xl font-semibold mb-1">{producto.nombre}</h3>
           <p>${producto.precio.toFixed(2)}</p>
+          {onAdd && (
+            <button
+              onClick={() => onAdd(producto)}
+              className="mt-4 bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"
+            >
+              Agregar al carrito
+            </button>
+          )}
         </div>
         <button
           onClick={next}

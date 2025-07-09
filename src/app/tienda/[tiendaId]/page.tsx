@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState, type FormEvent } from 'react';
-import Image from 'next/image';
+import PlantillaCards from './PlantillaCards';
+import PlantillaMinimal from './PlantillaMinimal';
+import PlantillaDarkCarousel from './PlantillaDarkCarousel';
 
 interface Producto {
   id: string;
@@ -19,6 +21,7 @@ interface CartItem {
 export default function TiendaPublicaPage({ params }: { params: { tiendaId: string } }) {
   const { tiendaId } = params;
   const [nombreTienda, setNombreTienda] = useState('');
+  const [plantilla, setPlantilla] = useState<string>('');
   const [productos, setProductos] = useState<Producto[]>([]);
   const [carrito, setCarrito] = useState<CartItem[]>([]);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -34,6 +37,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
         const tiendaData = await tiendaRes.json();
         if (tiendaRes.ok) {
           setNombreTienda(tiendaData.nombre);
+          setPlantilla(tiendaData.plantilla || '');
         }
         const prodRes = await fetch(`/api/publico/productos/${tiendaId}`);
         const prodData = await prodRes.json();
@@ -99,32 +103,21 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
         {nombreTienda || 'Tienda'}
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {productos.map((producto) => (
-          <div
-            key={producto.id}
-            className="bg-white/10 backdrop-blur-md rounded-xl p-4 shadow flex flex-col items-center"
-          >
-            {producto.imagenUrl && (
-              <Image
-                src={producto.imagenUrl}
-                alt={producto.nombre}
-                width={128}
-                height={128}
-                className="mb-2 h-32 w-32 object-cover rounded"
-              />
-            )}
-            <h2 className="text-xl font-semibold mb-1">{producto.nombre}</h2>
-            <p className="mb-4">${producto.precio.toFixed(2)}</p>
-            <button
-              onClick={() => agregarAlCarrito(producto)}
-              className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"
-            >
-              Agregar al carrito
-            </button>
-          </div>
-        ))}
-      </div>
+      {(() => {
+        const props = {
+          tienda: { id: tiendaId, nombre: nombreTienda },
+          productos,
+          onAdd: agregarAlCarrito,
+        };
+        switch (plantilla) {
+          case 'Minimal':
+            return <PlantillaMinimal {...props} />;
+          case 'Moderna':
+            return <PlantillaDarkCarousel {...props} />;
+          default:
+            return <PlantillaCards {...props} />;
+        }
+      })()}
 
       {carrito.length > 0 && (
         <div className="mt-10 bg-white/10 backdrop-blur-md p-6 rounded-xl shadow">

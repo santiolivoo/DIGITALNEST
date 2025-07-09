@@ -2,6 +2,7 @@ declare namespace Tienda {
   export interface TiendaData {
     id: string;
     nombre: string;
+    plantilla?: string;
     userId: string;
     createdAt: string;
     productos?: Producto.ProductoData[];

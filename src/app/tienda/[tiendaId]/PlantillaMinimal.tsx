@@ -15,9 +15,10 @@ interface Producto {
 interface Props {
   tienda: Tienda;
   productos: Producto[];
+  onAdd?: (producto: Producto) => void;
 }
 
-export default function PlantillaMinimal({ tienda, productos }: Props) {
+export default function PlantillaMinimal({ tienda, productos, onAdd }: Props) {
   return (
     <div className="p-6 text-white">
       <h2 className="text-2xl font-semibold text-center mb-6">{tienda.nombre}</h2>
@@ -40,6 +41,14 @@ export default function PlantillaMinimal({ tienda, productos }: Props) {
               <span>{producto.nombre}</span>
             </div>
             <span>${producto.precio.toFixed(2)}</span>
+            {onAdd && (
+              <button
+                onClick={() => onAdd(producto)}
+                className="ml-4 bg-[#FFD944] text-gray-900 px-2 py-1 rounded hover:bg-yellow-300 transition"
+              >
+                Añadir
+              </button>
+            )}
           </li>
         ))}
       </ul>

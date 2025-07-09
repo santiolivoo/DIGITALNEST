@@ -11,7 +11,7 @@ export async function GET(
   try {
     const tienda = await prisma.tienda.findUnique({
       where: { id: params.tiendaId },
-      select: { id: true, nombre: true },
+      select: { id: true, nombre: true, plantilla: true },
     });
 
     if (!tienda) {
