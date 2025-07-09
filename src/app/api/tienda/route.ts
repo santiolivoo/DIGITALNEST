@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/auth';
+import { Prisma } from '@prisma/client';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -53,9 +54,10 @@ export async function POST(req: Request) {
 
     if (tiendaExistente) {
       // Actualizar tienda existente
-      const dataUpdate: { nombre?: string; plantilla?: string } = {};
-      if (nombre !== undefined) dataUpdate.nombre = nombre;
-      if (plantilla !== undefined) dataUpdate.plantilla = plantilla;
+            const dataUpdate: Prisma.TiendaUpdateInput = {
+        ...(nombre !== undefined ? { nombre } : {}),
+        ...(plantilla !== undefined ? { plantilla } : {}),
+      };
 
       const tienda = await prisma.tienda.update({
         where: { id: tiendaExistente.id },
@@ -65,12 +67,21 @@ export async function POST(req: Request) {
       return NextResponse.json(tienda, { status: 200 });
     } else {
       // Crear nueva tienda para este usuario
-      const dataCreate: { userId: string; nombre?: string; plantilla?: string } = { userId: user.id };
-      if (nombre !== undefined) dataCreate.nombre = nombre;
-      if (plantilla !== undefined) dataCreate.plantilla = plantilla;
+            if (!nombre) {
+        return NextResponse.json(
+          { error: 'El nombre de la tienda es requerido' },
+          { status: 400 },
+        );
+      }
+
+      const dataCreate: Prisma.TiendaUncheckedCreateInput = {
+        userId: user.id,
+        nombre,
+        ...(plantilla !== undefined ? { plantilla } : {}),
+      };
 
       const tienda = await prisma.tienda.create({
-        data: dataCreate
+        data: dataCreate,
       });
 
       return NextResponse.json(tienda, { status: 201 });
@@ -108,9 +119,13 @@ export async function PATCH(req: Request) {
       );
     }
 
+    const dataUpdate: Prisma.TiendaUpdateInput = {
+      ...(plantilla !== undefined ? { plantilla } : {}),
+    };
+
     const updated = await prisma.tienda.update({
       where: { id: tienda.id },
-      data: { plantilla }
+      data: dataUpdate,
     });
 
     return NextResponse.json(updated);
