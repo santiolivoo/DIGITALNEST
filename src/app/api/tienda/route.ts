@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { nombre } = await req.json();
+    const { nombre, plantilla } = await req.json();
     
     // Verificar si el usuario ya tiene tienda
     const tiendaExistente = await prisma.tienda.findFirst({
@@ -50,19 +50,24 @@ export async function POST(req: Request) {
 
     if (tiendaExistente) {
       // Actualizar tienda existente
+      const dataUpdate: Record<string, any> = {};
+      if (nombre !== undefined) dataUpdate.nombre = nombre;
+      if (plantilla !== undefined) dataUpdate.plantilla = plantilla;
+
       const tienda = await prisma.tienda.update({
         where: { id: tiendaExistente.id },
-        data: { nombre }
+        data: dataUpdate
       });
 
       return NextResponse.json(tienda, { status: 200 });
     } else {
       // Crear nueva tienda para este usuario
+      const dataCreate: Record<string, any> = { userId: user.id };
+      if (nombre !== undefined) dataCreate.nombre = nombre;
+      if (plantilla !== undefined) dataCreate.plantilla = plantilla;
+
       const tienda = await prisma.tienda.create({
-        data: {
-          nombre,
-          userId: user.id
-        }
+        data: dataCreate
       });
 
       return NextResponse.json(tienda, { status: 201 });
