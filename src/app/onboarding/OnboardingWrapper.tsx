@@ -14,12 +14,19 @@ export default function OnboardingWrapper() {
   const router = useRouter()
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const completed = localStorage.getItem('onboardingCompleted')
-      if (completed === 'true') {
-        router.replace('/dashboard')
+        const checkTienda = async () => {
+      try {
+        const res = await fetch('/api/tienda', { credentials: 'include' })
+        const data = await res.json()
+        if (res.ok && data && data.id) {
+          router.replace('/dashboard')
+        }
+      } catch (error) {
+        console.error('Error verificando tienda:', error)
       }
     }
+    
+    checkTienda()
   }, [router])
 
   const next = () => setStep(step + 1)
