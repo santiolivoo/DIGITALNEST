@@ -60,7 +60,8 @@ export default function RegistroPage() {
         setConfirmPassword('')
         setAcepto(false)
         setTimeout(() => {
-          router.replace('/dashboard')
+          const done = localStorage.getItem('onboardingCompleted') === 'true'
+          router.replace(done ? '/dashboard' : '/onboarding')
         }, 500)
       } else {
         // Mostrar error de login

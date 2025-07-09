@@ -19,7 +19,8 @@ export default function HomePage() {
 
     const isAuthenticated = Cookies.get('isAuthenticated');
     if (isAuthenticated) {
-      router.push('/dashboard');
+      const done = localStorage.getItem('onboardingCompleted') === 'true';
+      router.push(done ? '/dashboard' : '/onboarding');
     }
   }, [router]);
 

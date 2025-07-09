@@ -24,8 +24,8 @@ useEffect(() => {
       console.log("📬 Resultado /api/session:", data);
 
       if (data.authenticated) {
-        console.log("✅ Usuario autenticado. Redirigiendo a /dashboard...");
-        router.replace("/dashboard");
+                const done = localStorage.getItem('onboardingCompleted') === 'true'
+        router.replace(done ? '/dashboard' : '/onboarding')
       }
     } catch (error) {
       console.error("❌ Error al verificar sesión:", error);
@@ -52,7 +52,8 @@ useEffect(() => {
 
             if (res.ok) {
         setMensaje("Inicio de sesión exitoso. Redirigiendo...");
-        router.replace("/dashboard");
+                const done = localStorage.getItem('onboardingCompleted') === 'true'
+        router.replace(done ? '/dashboard' : '/onboarding')
       } else {
         setMensaje(data.mensaje || "Error al iniciar sesión.");
       }
