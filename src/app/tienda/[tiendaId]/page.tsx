@@ -187,3 +187,4 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
     </div>
   );
 }
+
