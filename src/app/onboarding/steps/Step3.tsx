@@ -25,17 +25,8 @@ export default function Step3({ onNext, onBack }: { onNext: () => void; onBack: 
   const opciones =
     templatesByType[data.tipoNegocio as keyof typeof templatesByType] || templatesByType['Productos físicos']
 
-  const handleSelect = async (p: string) => {
+  const handleSelect = (p: string) => {
     setData({ plantilla: p })
-    try {
-      await fetch('/api/tienda', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plantilla: p }),
-      })
-    } catch (error) {
-      console.error('Error guardando plantilla:', error)
-    }
     onNext()
   }
 

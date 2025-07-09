@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { nombre, plantilla } = await req.json();
+    const { nombre, plantilla, tipoNegocio, color, modulos } = await req.json();
     
     // Verificar si el usuario ya tiene tienda
     const tiendaExistente = await prisma.tienda.findFirst({
@@ -57,6 +57,9 @@ export async function POST(req: Request) {
             const dataUpdate: Prisma.TiendaUpdateInput = {
         ...(nombre !== undefined ? { nombre } : {}),
         ...(plantilla !== undefined ? { plantilla } : {}),
+        ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
+        ...(color !== undefined ? { color } : {}),
+        ...(modulos !== undefined ? { modulos } : {}),
       };
 
       const tienda = await prisma.tienda.update({
@@ -78,6 +81,9 @@ export async function POST(req: Request) {
         userId: user.id,
         nombre,
         ...(plantilla !== undefined ? { plantilla } : {}),
+        ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
+        ...(color !== undefined ? { color } : {}),
+        ...(modulos !== undefined ? { modulos } : {}),
       };
 
       const tienda = await prisma.tienda.create({
@@ -106,7 +112,7 @@ export async function PATCH(req: Request) {
       );
     }
 
-    const { plantilla } = await req.json();
+    const { nombre, plantilla, tipoNegocio, color, modulos } = await req.json();
 
     const tienda = await prisma.tienda.findFirst({
       where: { userId: user.id }
@@ -120,7 +126,11 @@ export async function PATCH(req: Request) {
     }
 
     const dataUpdate: Prisma.TiendaUpdateInput = {
+            ...(nombre !== undefined ? { nombre } : {}),
       ...(plantilla !== undefined ? { plantilla } : {}),
+      ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
+      ...(color !== undefined ? { color } : {}),
+      ...(modulos !== undefined ? { modulos } : {}),
     };
 
     const updated = await prisma.tienda.update({

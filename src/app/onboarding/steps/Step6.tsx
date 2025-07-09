@@ -6,7 +6,16 @@ export default function Step6({ onBack }: { onBack: () => void }) {
   const { data } = useOnboardingStore()
   const router = useRouter()
 
-  const finish = () => {
+  const finish = async () => {
+    try {
+      await fetch('/api/tienda', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+    } catch (error) {
+      console.error('Error creando tienda:', error)
+    }
     if (typeof window !== 'undefined') {
       localStorage.setItem('onboardingCompleted', 'true')
     }
