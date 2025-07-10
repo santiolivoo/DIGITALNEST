@@ -62,7 +62,7 @@ export default function Header() {
         )}
       </div>
       <button
-        className="sm:hidden p-2"
+        className="md:hidden p-2"
         aria-label="Toggle menu"
         onClick={() => setMenuOpen(!menuOpen)}
       >
@@ -82,7 +82,7 @@ export default function Header() {
         </svg>
       </button>
       <nav
-        className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 absolute top-full left-0 w-full bg-white/10 backdrop-blur-sm p-2 sm:static sm:flex sm:flex-row sm:items-center sm:gap-4 sm:bg-transparent sm:p-0`}
+        className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 absolute top-full left-0 w-full bg-white/10 backdrop-blur-sm p-2 md:static md:flex md:flex-row md:items-center md:gap-4 md:bg-transparent md:p-0`}
       >
         <Link href="/dashboard" className="hover:underline">
           Inicio
@@ -103,7 +103,7 @@ export default function Header() {
         )}
         <button
           onClick={handleLogout}
-          className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition sm:ml-4"
+          className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition md:ml-4"
         >
           Cerrar sesión
         </button>
