@@ -11,6 +11,7 @@ export default function Header() {
   const router = useRouter();
   const [nombreTienda, setNombreTienda] = useState<string>('');
   const [tiendaId, setTiendaId] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -53,18 +54,48 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white/10 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/20">
+    <header className="relative bg-white/10 backdrop-blur-md p-4 flex justify-between items-center border-b border-white/20">
       <div className="flex flex-col">
         <Logo className="h-12 w-auto" />
         {nombreTienda && (
           <span className="text-sm text-gray-200">Tienda: {nombreTienda}</span>
         )}
       </div>
-      <nav className="space-x-4 flex items-center">
-        <Link href="/dashboard" className="hover:underline">Inicio</Link>
-        <Link href="/dashboard/productos" className="hover:underline">Productos</Link>
-        <Link href="/dashboard/pedidos" className="hover:underline">Pedidos</Link>
-        <Link href="/dashboard/configuracion" className="hover:underline">Configuración</Link>
+      <button
+        className="sm:hidden p-2"
+        aria-label="Toggle menu"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
+          />
+        </svg>
+      </button>
+      <nav
+        className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 absolute top-full left-0 w-full bg-white/10 backdrop-blur-md p-4 sm:static sm:flex sm:flex-row sm:items-center sm:gap-4 sm:bg-transparent sm:p-0`}
+      >
+        <Link href="/dashboard" className="hover:underline">
+          Inicio
+        </Link>
+        <Link href="/dashboard/productos" className="hover:underline">
+          Productos
+        </Link>
+        <Link href="/dashboard/pedidos" className="hover:underline">
+          Pedidos
+        </Link>
+        <Link href="/dashboard/configuracion" className="hover:underline">
+          Configuración
+        </Link>
         {tiendaId && (
           <Link href={`/tienda/${tiendaId}`} className="hover:underline">
             Ver mi tienda
@@ -72,7 +103,7 @@ export default function Header() {
         )}
         <button
           onClick={handleLogout}
-          className="ml-4 bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"
+          className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition sm:ml-4"
         >
           Cerrar sesión
         </button>
