@@ -82,7 +82,7 @@ export default function Header() {
         </svg>
       </button>
       <nav
-        className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 absolute top-full left-0 w-full bg-white/10 backdrop-blur-md p-4 sm:static sm:flex sm:flex-row sm:items-center sm:gap-4 sm:bg-transparent sm:p-0`}
+        className={`${menuOpen ? 'flex' : 'hidden'} flex-col gap-2 absolute top-full left-0 w-full bg-white/10 backdrop-blur-sm p-2 sm:static sm:flex sm:flex-row sm:items-center sm:gap-4 sm:bg-transparent sm:p-0`}
       >
         <Link href="/dashboard" className="hover:underline">
           Inicio
