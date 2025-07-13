@@ -20,6 +20,29 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment Variables
+
+Create an `.env` file in the project root with the following variables:
+
+```env
+DATABASE_URL="postgres://USER:PASSWORD@HOST:PORT/DBNAME"
+JWT_SECRET="your-secret-key"
+```
+
+`DATABASE_URL` configures the Prisma database connection and `JWT_SECRET` is used to sign login tokens. Missing variables can result in runtime errors or failed logins.
+
+### Run Prisma Migrations
+
+Before starting the server, apply any pending migrations:
+
+```bash
+npx prisma migrate deploy
+# or during development
+npx prisma migrate dev
+```
+
+This keeps your database schema in sync with the application.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

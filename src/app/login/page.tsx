@@ -20,7 +20,14 @@ useEffect(() => {
         credentials: "include", // para incluir cookies
       });
 
-      const data = await res.json();
+      let data: any = null;
+      const sessionContentType = res.headers.get("content-type");
+      if (sessionContentType && sessionContentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        console.error("❌ Respuesta inesperada al verificar sesión");
+        return;
+      }
       console.log("📬 Resultado /api/session:", data);
 
       if (data.authenticated) {
@@ -48,7 +55,14 @@ useEffect(() => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      let data: any = null;
+      const loginContentType = res.headers.get("content-type");
+      if (loginContentType && loginContentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        setMensaje("Error al iniciar sesión.");
+        return;
+      }
 
             if (res.ok) {
         setMensaje("Inicio de sesión exitoso. Redirigiendo...");
