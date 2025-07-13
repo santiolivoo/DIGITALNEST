@@ -1,27 +1,29 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useOnboardingStore } from '../onboarding/useOnboardingStore';
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
-  const [tiendaId, setTiendaId] = useState<string | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchTienda = async () => {
-      try {
-        const res = await fetch('/api/tienda', { credentials: 'include' });
-        const data = await res.json();
-        if (res.ok && data && data.id) {
-          setTiendaId(data.id);
-        }
-      } catch (error) {
-        console.error('Error obteniendo tienda:', error);
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/logout', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (res.ok) {
+        localStorage.removeItem('onboardingCompleted');
+        useOnboardingStore.getState().reset();
+        router.replace('/');
       }
-    };
-
-    fetchTienda();
-  }, []);
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
 
   return (
     <aside className="sm:w-64 border-b border-white/20 sm:border-b-0 sm:border-r">
@@ -50,32 +52,35 @@ export default function Sidebar() {
       >
         <ul className="flex flex-col gap-2">
           <li>
-            <Link href="/dashboard" className="hover:underline">
-              Inicio
+            <Link href="#" className="hover:underline">
+              Notificaciones
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/productos" className="hover:underline">
-              Productos
+            <Link href="#" className="hover:underline">
+              Ajustes
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/pedidos" className="hover:underline">
-              Pedidos
+            <Link href="#" className="hover:underline">
+              Perfil
             </Link>
           </li>
           <li>
-            <Link href="/dashboard/configuracion" className="hover:underline">
-              Configuración
+            <Link href="#" className="hover:underline">
+              Ayuda
             </Link>
           </li>
-          {tiendaId && (
-            <li>
-              <Link href={`/tienda/${tiendaId}`} className="hover:underline">
-                Ver mi tienda
-              </Link>
-            </li>
-          )}
+          <li>
+            <Link href="#" className="hover:underline">
+              Comunidad
+            </Link>
+          </li>
+          <li>
+            <button onClick={handleLogout} className="hover:underline">
+              Cerrar Sesión
+            </button>
+          </li>
         </ul>
       </nav>
     </aside>

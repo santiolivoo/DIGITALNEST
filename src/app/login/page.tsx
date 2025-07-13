@@ -5,57 +5,64 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Logo from "@/components/Logo";
 
+// Tipo para las respuestas del backend
+type LoginResponse = {
+  mensaje?: string;
+  authenticated?: boolean;
+};
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState("");
   const router = useRouter();
 
-useEffect(() => {
-  async function checkAuth() {
-    console.log("🔍 Verificando sesión con /api/session");
-    try {
-      const res = await fetch("/api/session", {
-        method: "GET",
-        credentials: "include", // para incluir cookies
-      });
-
-      let data: any = null;
-      const sessionContentType = res.headers.get("content-type");
-      if (sessionContentType && sessionContentType.includes("application/json")) {
-        data = await res.json();
-      } else {
-        console.error("❌ Respuesta inesperada al verificar sesión");
-        return;
-      }
-      console.log("📬 Resultado /api/session:", data);
-
-      if (data.authenticated) {
-                const done = localStorage.getItem('onboardingCompleted') === 'true'
-        router.replace(done ? '/dashboard' : '/onboarding')
-      }
-    } catch (error) {
-      console.error("❌ Error al verificar sesión:", error);
-    }
-  }
-  checkAuth();
-}, [router]);
-
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-      event.preventDefault();
-      setMensaje(""); // Limpiar mensaje previo
-
+  useEffect(() => {
+    async function checkAuth() {
+      console.log("🔍 Verificando sesión con /api/session");
       try {
+        const res = await fetch("/api/session", {
+          method: "GET",
+          credentials: "include", // para incluir cookies
+        });
+
+        let data: LoginResponse | null = null;
+        const sessionContentType = res.headers.get("content-type");
+        if (sessionContentType && sessionContentType.includes("application/json")) {
+          data = await res.json();
+        } else {
+          console.error("❌ Respuesta inesperada al verificar sesión");
+          return;
+        }
+        console.log("📬 Resultado /api/session:", data);
+
+        if (data && data.authenticated) {
+          const done = localStorage.getItem('onboardingCompleted') === 'true';
+          router.replace(done ? '/dashboard' : '/onboarding');
+        }
+      } catch (error) {
+        console.error("❌ Error al verificar sesión:", error);
+      }
+    }
+
+    checkAuth();
+  }, [router]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMensaje(""); // Limpiar mensaje previo
+
+    try {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: {
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
-      let data: any = null;
+      let data: LoginResponse | null = null;
       const loginContentType = res.headers.get("content-type");
       if (loginContentType && loginContentType.includes("application/json")) {
         data = await res.json();
@@ -64,18 +71,18 @@ useEffect(() => {
         return;
       }
 
-            if (res.ok) {
+      if (data && res.ok) {
         setMensaje("Inicio de sesión exitoso. Redirigiendo...");
-                const done = localStorage.getItem('onboardingCompleted') === 'true'
-        router.replace(done ? '/dashboard' : '/onboarding')
+        const done = localStorage.getItem('onboardingCompleted') === 'true';
+        router.replace(done ? '/dashboard' : '/onboarding');
       } else {
-        setMensaje(data.mensaje || "Error al iniciar sesión.");
+        setMensaje(data?.mensaje || "Error al iniciar sesión.");
       }
-      } catch (error) {
+    } catch (error) {
       setMensaje("Error de red al intentar iniciar sesión.");
       console.error(error);
-      }
     }
+  }
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">

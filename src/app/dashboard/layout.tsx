@@ -1,6 +1,5 @@
 // src/app/dashboard/layout.tsx
 import type { Metadata } from 'next';
-import Header from './Header';
 import Sidebar from './Sidebar';
 
 export const metadata: Metadata = {
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen text-white flex flex-col">
-      <Header />
       <div className="flex flex-col sm:flex-row flex-1">
         <Sidebar />
         <main className="flex-1 max-w-6xl mx-auto px-4 py-8">{children}</main>
