@@ -64,7 +64,7 @@ export default function Sidebar() {
             </Link>
           </li>
           <li>
-            <Link href="#" className="hover:underline">
+            <Link href="/dashboard/configuracion" className="hover:underline">
               Ajustes
             </Link>
           </li>
