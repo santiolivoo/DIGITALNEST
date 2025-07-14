@@ -89,13 +89,7 @@ export default function DashboardPage() {
             <p className="text-gray-200 text-sm">Gestiona tus ventas</p>
           </Link>
 
-          <Link
-            href="/dashboard/configuracion"
-            className="bg-white/10 backdrop-blur-md rounded-xl p-5 hover:bg-white/20 transition border border-white/20"
-          >
-            <h3 className="text-xl font-semibold text-[#FFD944] mb-1">Configuración</h3>
-            <p className="text-gray-200 text-sm">Personaliza tu tienda</p>
-          </Link>
+          
         </section>
       </div>
     </main>

@@ -1,12 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useOnboardingStore } from '../onboarding/useOnboardingStore';
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia('(min-width: 640px)').matches) {
+      setOpen(false);
+    }
+  }, []);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -26,9 +31,11 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sm:w-64 border-b border-white/20 sm:border-b-0 sm:border-r">
+    <aside
+      className={`${open ? 'sm:w-64' : 'sm:w-16'} border-b border-white/20 sm:border-b-0 sm:border-r`}
+    >
       <button
-        className="sm:hidden p-2"
+        className="p-2"
         aria-label="Toggle sidebar"
         onClick={() => setOpen(!open)}
       >
@@ -48,7 +55,7 @@ export default function Sidebar() {
         </svg>
       </button>
       <nav
-        className={`${open ? 'block' : 'hidden'} bg-white/10 backdrop-blur-md p-4 sm:block sm:h-screen sm:bg-transparent`}
+        className={`${open ? 'block' : 'hidden'} bg-white/10 backdrop-blur-md p-4 sm:h-screen sm:bg-transparent`}
       >
         <ul className="flex flex-col gap-2">
           <li>
