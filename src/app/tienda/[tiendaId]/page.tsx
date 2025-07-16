@@ -18,6 +18,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   const [nombreTienda, setNombreTienda] = useState('');
   const [plantilla, setPlantilla] = useState<string>('');
   const [color, setColor] = useState<string>('#FFD944');
+  const [fuente, setFuente] = useState<string>('');
   const [productos, setProductos] = useState<Producto[]>([]);
   const [carrito, setCarrito] = useState<CartItem[]>([]);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -28,6 +29,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
 
   const template = getTemplateByName(plantilla);
   const accentColor = color || template?.config.colors.accent || '#FFD944';
+  const fontFamily = fuente || template?.config.fonts.body || 'inherit';
 
   useEffect(() => {
     if (!template) return;
@@ -52,6 +54,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
           setNombreTienda(tiendaData.nombre);
           setPlantilla(tiendaData.plantilla || '');
           setColor(tiendaData.color || '#FFD944');
+          setFuente(tiendaData.fuente || '');
         }
         const prodRes = await fetch(`/api/publico/productos/${tiendaId}`);
         const prodData = await prodRes.json();
@@ -114,7 +117,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   return (
     <div
       className="min-h-screen p-6 text-white"
-      style={{ '--accent': accentColor } as React.CSSProperties}
+      style={{ '--accent': accentColor, fontFamily } as React.CSSProperties}
     >
       <h1 className="text-3xl font-semibold text-center mb-8" style={{ color: 'var(--accent)' }}>
         {nombreTienda || 'Tienda'}
@@ -122,7 +125,12 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
 
       {(() => {
         const props = {
-          tienda: { id: tiendaId, nombre: nombreTienda, color: accentColor },
+          tienda: {
+            id: tiendaId,
+            nombre: nombreTienda,
+            color: accentColor,
+            fuente: fontFamily,
+          },
           productos,
           onAdd: agregarAlCarrito,
         };

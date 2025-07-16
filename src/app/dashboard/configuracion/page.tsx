@@ -10,6 +10,7 @@ export default function ConfiguracionPage() {
   const [nombre, setNombre] = useState('');
   const [plantilla, setPlantilla] = useState('');
   const [color, setColor] = useState('#FFD944');
+  const [fuente, setFuente] = useState('');
   const [tipoNegocio, setTipoNegocio] = useState('');
   const [modulos, setModulos] = useState<string[]>([]);
   const [mensaje, setMensaje] = useState('');
@@ -25,6 +26,7 @@ export default function ConfiguracionPage() {
           setNombre(data.nombre || '');
           setPlantilla(data.plantilla || '');
           setColor(data.color || '#FFD944');
+          setFuente(data.fuente || '');
           setTipoNegocio(data.tipoNegocio || '');
           setModulos(data.modulos || []);
         }
@@ -51,7 +53,7 @@ export default function ConfiguracionPage() {
       const res = await fetch('/api/tienda', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, plantilla, color, tipoNegocio, modulos }),
+        body: JSON.stringify({ nombre, plantilla, color, fuente, tipoNegocio, modulos }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -109,6 +111,19 @@ export default function ConfiguracionPage() {
             onChange={(e) => setColor(e.target.value)}
             className="w-24 h-10 rounded border border-white/30"
           />
+        </div>
+        <div>
+          <label className="block text-gray-200 mb-2">Fuente</label>
+          <select
+            value={fuente}
+            onChange={(e) => setFuente(e.target.value)}
+            className="w-full p-3 border border-white/30 rounded-md bg-transparent text-white"
+          >
+            <option value="">Por defecto</option>
+            <option value="Inter">Inter</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Arial">Arial</option>
+          </select>
         </div>
         <div>
           <label className="block text-gray-200 mb-2">Tipo de negocio</label>

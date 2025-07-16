@@ -3,6 +3,8 @@ declare namespace Tienda {
     id: string;
     nombre: string;
     plantilla?: string;
+    color?: string;
+    fuente?: string;
     userId: string;
     createdAt: string;
     productos?: Producto.ProductoData[];

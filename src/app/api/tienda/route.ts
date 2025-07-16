@@ -20,7 +20,7 @@ export async function GET() {
     // Buscar la tienda del usuario específico
     const tienda = await prisma.tienda.findFirst({
       where: { userId: user.id },
-      include: { productos: true }
+       include: { productos: true }
     });
 
     return NextResponse.json(tienda || null);
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { nombre, plantilla, tipoNegocio, color, modulos } = await req.json();
+    const { nombre, plantilla, tipoNegocio, color, fuente, modulos } = await req.json();
     
     // Verificar si el usuario ya tiene tienda
     const tiendaExistente = await prisma.tienda.findFirst({
@@ -59,6 +59,7 @@ export async function POST(req: Request) {
         ...(plantilla !== undefined ? { plantilla } : {}),
         ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
         ...(color !== undefined ? { color } : {}),
+        ...(fuente !== undefined ? { fuente } : {}),
         ...(modulos !== undefined ? { modulos } : {}),
       };
 
@@ -83,6 +84,7 @@ export async function POST(req: Request) {
         ...(plantilla !== undefined ? { plantilla } : {}),
         ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
         ...(color !== undefined ? { color } : {}),
+        ...(fuente !== undefined ? { fuente } : {}),
         ...(modulos !== undefined ? { modulos } : {}),
       };
 
@@ -112,7 +114,7 @@ export async function PATCH(req: Request) {
       );
     }
 
-    const { nombre, plantilla, tipoNegocio, color, modulos } = await req.json();
+    const { nombre, plantilla, tipoNegocio, color, fuente, modulos } = await req.json();
 
     const tienda = await prisma.tienda.findFirst({
       where: { userId: user.id }
@@ -130,6 +132,7 @@ export async function PATCH(req: Request) {
       ...(plantilla !== undefined ? { plantilla } : {}),
       ...(tipoNegocio !== undefined ? { tipoNegocio } : {}),
       ...(color !== undefined ? { color } : {}),
+      ...(fuente !== undefined ? { fuente } : {}),
       ...(modulos !== undefined ? { modulos } : {}),
     };
 
