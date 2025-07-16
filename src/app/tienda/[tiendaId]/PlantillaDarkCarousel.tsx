@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import type { Producto } from '@/types/producto';
+import PlantillaBase from './PlantillaBase';
 
 interface Tienda {
   id: string;
   nombre: string;
+  color?: string;
 }
 
 
@@ -28,10 +30,7 @@ export default function PlantillaDarkCarousel({ tienda, productos, onAdd }: Prop
   const producto = productos[index];
 
   return (
-    <div className="p-6 text-white bg-black/50 rounded-xl">
-      <h2 className="text-3xl font-semibold text-center text-[#FFD944] mb-8">
-        {tienda.nombre}
-      </h2>
+    <PlantillaBase tienda={tienda} productos={productos} className="bg-black/50 rounded-xl">
       <div className="relative flex items-center justify-center">
         <button
           onClick={prev}
@@ -54,7 +53,8 @@ export default function PlantillaDarkCarousel({ tienda, productos, onAdd }: Prop
           {onAdd && (
             <button
               onClick={() => onAdd(producto)}
-              className="mt-4 bg-[#FFD944] text-gray-900 px-3 py-1 rounded hover:bg-yellow-300 transition"
+              className="mt-4 text-gray-900 px-3 py-1 rounded transition"
+              style={{ backgroundColor: 'var(--accent)' }}
             >
               Agregar al carrito
             </button>
@@ -73,11 +73,11 @@ export default function PlantillaDarkCarousel({ tienda, productos, onAdd }: Prop
             key={i}
             onClick={() => setIndex(i)}
             className={`inline-block h-2 w-2 rounded-full ${
-              i === index ? 'bg-[#FFD944]' : 'bg-white/30'
+              i === index ? 'bg-[var(--accent)]' : 'bg-white/30'
             }`}
           />
         ))}
       </div>
-    </div>
+    </PlantillaBase>
   );
 }

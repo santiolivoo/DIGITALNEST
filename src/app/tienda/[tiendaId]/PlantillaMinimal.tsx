@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import type { Producto } from '@/types/producto';
+import PlantillaBase from './PlantillaBase';
 
 interface Tienda {
   id: string;
   nombre: string;
+  color?: string;
 }
 
 interface Props {
@@ -14,8 +16,7 @@ interface Props {
 
 export default function PlantillaMinimal({ tienda, productos, onAdd }: Props) {
   return (
-    <div className="p-6 text-white">
-      <h2 className="text-2xl font-semibold text-center mb-6">{tienda.nombre}</h2>
+    <PlantillaBase tienda={tienda} productos={productos}>
       <ul className="space-y-4">
         {productos.map((producto) => (
           <li
@@ -38,7 +39,8 @@ export default function PlantillaMinimal({ tienda, productos, onAdd }: Props) {
             {onAdd && (
               <button
                 onClick={() => onAdd(producto)}
-                className="ml-4 bg-[#FFD944] text-gray-900 px-2 py-1 rounded hover:bg-yellow-300 transition"
+                className="ml-4 text-gray-900 px-2 py-1 rounded transition"
+                style={{ backgroundColor: 'var(--accent)' }}
               >
                 Añadir
               </button>
@@ -46,6 +48,6 @@ export default function PlantillaMinimal({ tienda, productos, onAdd }: Props) {
           </li>
         ))}
       </ul>
-    </div>
+    </PlantillaBase>
   );
 }

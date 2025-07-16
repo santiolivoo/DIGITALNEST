@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type FormEvent } from 'react';
+import type React from 'react';
 import PlantillaCards from './PlantillaCards';
 import PlantillaMinimal from './PlantillaMinimal';
 import PlantillaDarkCarousel from './PlantillaDarkCarousel';
@@ -15,6 +16,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   const { tiendaId } = params;
   const [nombreTienda, setNombreTienda] = useState('');
   const [plantilla, setPlantilla] = useState<string>('');
+  const [color, setColor] = useState<string>('#FFD944');
   const [productos, setProductos] = useState<Producto[]>([]);
   const [carrito, setCarrito] = useState<CartItem[]>([]);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -31,6 +33,7 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
         if (tiendaRes.ok) {
           setNombreTienda(tiendaData.nombre);
           setPlantilla(tiendaData.plantilla || '');
+          setColor(tiendaData.color || '#FFD944');
         }
         const prodRes = await fetch(`/api/publico/productos/${tiendaId}`);
         const prodData = await prodRes.json();
@@ -91,14 +94,14 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   };
 
   return (
-    <div className="min-h-screen p-6 text-white">
-      <h1 className="text-3xl font-semibold text-center text-[#FFD944] mb-8">
+    <div className="min-h-screen p-6 text-white" style={{ '--accent': color } as React.CSSProperties}>
+      <h1 className="text-3xl font-semibold text-center mb-8" style={{ color: 'var(--accent)' }}>
         {nombreTienda || 'Tienda'}
       </h1>
 
       {(() => {
         const props = {
-          tienda: { id: tiendaId, nombre: nombreTienda },
+          tienda: { id: tiendaId, nombre: nombreTienda, color },
           productos,
           onAdd: agregarAlCarrito,
         };
@@ -130,7 +133,8 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
           <p className="mt-2 font-semibold">Total: ${total.toFixed(2)}</p>
           <button
             onClick={() => setMostrarForm(true)}
-            className="mt-4 bg-[#FFD944] text-gray-900 px-4 py-2 rounded hover:bg-yellow-300 transition"
+            className="mt-4 text-gray-900 px-4 py-2 rounded transition"
+            style={{ backgroundColor: 'var(--accent)' }}
           >
             Finalizar compra
           </button>
@@ -164,7 +168,8 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
           </div>
           <button
             type="submit"
-            className="w-full bg-[#FFD944] text-gray-900 py-3 rounded-md hover:bg-yellow-300 transition font-medium"
+            className="w-full text-gray-900 py-3 rounded-md transition font-medium"
+            style={{ backgroundColor: 'var(--accent)' }}
           >
             Enviar pedido
           </button>

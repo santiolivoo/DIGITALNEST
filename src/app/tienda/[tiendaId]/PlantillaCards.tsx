@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import type { Producto } from '@/types/producto';
+import PlantillaBase from './PlantillaBase';
 
 interface Tienda {
   id: string;
   nombre: string;
+  color?: string;
 }
 
 
@@ -15,10 +17,7 @@ interface Props {
 
 export default function PlantillaCards({ tienda, productos, onAdd }: Props) {
   return (
-    <div className="p-6 text-white">
-      <h2 className="text-3xl font-semibold text-center text-[#FFD944] mb-8">
-        {tienda.nombre}
-      </h2>
+    <PlantillaBase tienda={tienda} productos={productos}>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {productos.map((producto) => (
           <div
@@ -36,10 +35,11 @@ export default function PlantillaCards({ tienda, productos, onAdd }: Props) {
             )}
             <h3 className="text-xl font-semibold mb-1">{producto.nombre}</h3>
             <p className="mb-2">${producto.precio.toFixed(2)}</p>
-                        {onAdd && (
+            {onAdd && (
               <button
                 onClick={() => onAdd(producto)}
-                className="bg-[#FFD944] text-gray-900 px-3 py-1 rounded mt-2 hover:bg-yellow-300 transition"
+                className="text-gray-900 px-3 py-1 rounded mt-2 transition"
+                style={{ backgroundColor: 'var(--accent)' }}
               >
                 Agregar al carrito
               </button>
@@ -47,6 +47,6 @@ export default function PlantillaCards({ tienda, productos, onAdd }: Props) {
           </div>
         ))}
       </div>
-    </div>
+    </PlantillaBase>
   );
 }
