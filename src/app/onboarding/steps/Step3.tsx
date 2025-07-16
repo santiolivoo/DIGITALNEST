@@ -1,24 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useOnboardingStore } from '../useOnboardingStore'
-
-const templatesByType: Record<string, { name: string; preview: string }[]> = {
-  'Productos físicos': [
-    { name: 'Clásica', preview: '/digitalnest.svg.svg' },
-    { name: 'Minimal', preview: '/next.svg' },
-    { name: 'Moderna', preview: '/vercel.svg' },
-  ],
-  Ropa: [
-    { name: 'Fashion', preview: '/digitalnest2.svg' },
-    { name: 'Lookbook', preview: '/next.svg' },
-    { name: 'Trendy', preview: '/vercel.svg' },
-  ],
-  Servicios: [
-    { name: 'Profesional', preview: '/digitalnest2.svg' },
-    { name: 'Portfolio', preview: '/next.svg' },
-    { name: 'Agencia', preview: '/vercel.svg' },
-  ],
-}
+import { templatesByType } from '@/templates/templateConfig'
 
 export default function Step3({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   const { setData, data } = useOnboardingStore()

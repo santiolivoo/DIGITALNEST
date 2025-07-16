@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from 'react';
 import type React from 'react';
+import { getTemplateByName } from '@/templates/templateConfig';
 import PlantillaCards from './PlantillaCards';
 import PlantillaMinimal from './PlantillaMinimal';
 import PlantillaDarkCarousel from './PlantillaDarkCarousel';
@@ -24,6 +25,23 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   const [clienteEmail, setClienteEmail] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [pedidoId, setPedidoId] = useState<string | null>(null);
+
+  const template = getTemplateByName(plantilla);
+  const accentColor = color || template?.config.colors.accent || '#FFD944';
+
+  useEffect(() => {
+    if (!template) return;
+    const root = document.documentElement;
+    root.style.setProperty('--background', template.config.colors.background);
+    root.style.setProperty('--foreground', template.config.colors.text);
+    root.style.setProperty('--font-title', template.config.fonts.title);
+    root.style.setProperty('--font-body', template.config.fonts.body);
+  }, [template]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--accent', accentColor);
+  }, [accentColor]);
 
   useEffect(() => {
     const cargarDatos = async () => {
@@ -94,21 +112,24 @@ export default function TiendaPublicaPage({ params }: { params: { tiendaId: stri
   };
 
   return (
-    <div className="min-h-screen p-6 text-white" style={{ '--accent': color } as React.CSSProperties}>
+    <div
+      className="min-h-screen p-6 text-white"
+      style={{ '--accent': accentColor } as React.CSSProperties}
+    >
       <h1 className="text-3xl font-semibold text-center mb-8" style={{ color: 'var(--accent)' }}>
         {nombreTienda || 'Tienda'}
       </h1>
 
       {(() => {
         const props = {
-          tienda: { id: tiendaId, nombre: nombreTienda, color },
+          tienda: { id: tiendaId, nombre: nombreTienda, color: accentColor },
           productos,
           onAdd: agregarAlCarrito,
         };
-        switch (plantilla) {
-          case 'Minimal':
+        switch (template?.config.layout) {
+          case 'minimal':
             return <PlantillaMinimal {...props} />;
-          case 'Moderna':
+          case 'carousel':
             return <PlantillaDarkCarousel {...props} />;
           default:
             return <PlantillaCards {...props} />;
